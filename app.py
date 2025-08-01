@@ -157,11 +157,11 @@ def resume_analysis_page():
             })
             st.success("Sample resume analyzed successfully!")
 
-if uploaded_file:
+    if uploaded_file:
         with st.spinner("🔄 Processing your resume..."):
             try:
                 # Extract text from resume
-    resume_text = get_resume_text(uploaded_file)
+                resume_text = get_resume_text(uploaded_file)
 
                 # Progress bar
                 progress_bar = st.progress(0)
@@ -174,8 +174,8 @@ if uploaded_file:
                 progress_bar.progress(50)
                 
                 # Extract data using AI
-        raw_json = extract_resume_data(resume_text)
-        data = json.loads(raw_json)
+                raw_json = extract_resume_data(resume_text)
+                data = json.loads(raw_json)
 
                 progress_bar.progress(75)
                 status_text.text("Processing results...")
@@ -195,11 +195,10 @@ if uploaded_file:
                 
             except Exception as e:
                 st.error(f"❌ Error analyzing resume: {str(e)}")
-                return
     
-    # Display results if data exists
-    if st.session_state.resume_data:
-        display_resume_results(st.session_state.resume_data)
+        # Display results if data exists
+        if st.session_state.resume_data:
+            display_resume_results(st.session_state.resume_data)
         
         # Comparison feature
         st.markdown("## 🔄 Compare with Previous Analysis")
@@ -541,9 +540,9 @@ def report_generator_page():
             try:
                 if report_format == "PDF":
                     filename = f"{data.get('Name', 'resume')}_{report_type.lower().replace(' ', '_')}_report.pdf"
-            filepath = generate_pdf_report(data, filename)
+                    filepath = generate_pdf_report(data, filename)
                     
-            with open(filepath, "rb") as f:
+                    with open(filepath, "rb") as f:
                         st.download_button(
                             label="📥 Download PDF Report",
                             data=f.read(),
