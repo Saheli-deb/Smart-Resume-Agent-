@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; }
+    h1 { color: #2c3e50; }
+    h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    .section { margin-bottom: 20px; }
+    .label { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>AI Resume Analysis Report</h1>
+
+  <div class="section"><span class="label">Name:</span> {{ data.Name }}</div>
+  <div class="section"><span class="label">Email:</span> {{ data.Email }}</div>
+  <div class="section"><span class="label">Phone:</span> {{ data.Phone }}</div>
+
+  {% for section in ['Education', 'Skills', 'Projects', 'Certifications', 'Internships / Work experience', 'Domain of expertise'] %}
+    {% if data[section] %}
+      <div class="section">
+        <h2>{{ section }}</h2>
+        {% if data[section] is string %}
+          <p>{{ data[section] }}</p>
+        {% elif data[section] is iterable %}
+          <ul>
+            {% for item in data[section] %}
+              <li>
+                {% if item is mapping %}
+                  {{ item | join(", ", attribute='items') }}
+                {% else %}
+                  {{ item }}
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>{{ data[section] }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+</body>
+</html>
